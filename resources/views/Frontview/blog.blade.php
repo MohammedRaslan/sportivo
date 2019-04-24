@@ -1,4 +1,8 @@
-@include('Frontview.inc.header')
+@if(Auth::guest())
+@include('notfound')
+@else
+@extends('Frontview.inc.header')
+@section('body')
 <div class="hero-area section">
 
 			<!-- Backgound Image -->
@@ -147,9 +151,10 @@
 
 						<!-- search widget -->
 						<div class="widget search-widget">
-							<form>
-								<input class="input" type="text" name="search">
-								<button><i class="fa fa-search"></i></button>
+							<form action="{{ URL::to('/search') }}" method="POST" role="search">
+								{{ csrf_field() }}
+								<input class="input" type="text" name="search" placeholder="Search..." >
+								<button type="submit"><i class="fa fa-search"></i></button>
 							</form>
 						</div>
 						<!-- /search widget -->
@@ -228,3 +233,5 @@
 		</div>
 		<!-- /Blog -->
 @include('Frontview.inc.footer')
+@endsection
+@endif

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     /*
@@ -18,15 +18,34 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers{
+        logout as performLogout;
+    }
+
+    public function logout(Request $request)
+{
+    $this->performLogout($request);
+    return redirect()->route('postindex');
+}
 
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    //protected $redirectTo = '/';
 
+    protected function authenticated(Request $request, $user){
+            if ( $user->user_type == 0 ) {// do your margic here
+            return redirect('/admin');
+        }elseif ($user->user_type == 1) {
+            return redirect('postindex');
+        }
+        Session::set('user_id',$user->id);
+        
+    }
+
+    
     /**
      * Create a new controller instance.
      *

@@ -200,7 +200,7 @@ class PostsController extends Controller
     }
 
 
-    public function comment(Request $request) {
+        public function comment(Request $request) {
         $posts = DB::table('posts')->select('id','body','img','author','created_at')->orderBy('id','desc')->get();
         
         
@@ -268,6 +268,5 @@ class PostsController extends Controller
         }
         return null;
     }
-
 
 }

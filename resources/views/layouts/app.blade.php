@@ -42,10 +42,17 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
-                        @if (Auth::guest())
+                         @if (Auth::guest())
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
+                        <li> <a href="postindex">Website</a> </li>
+                        <li> <a href="addpost">Add Post</a> </li>
+                        <li> <a href="postslist">Edit/Delete Post</a> </li>
+                        <li> <a href="users">Users</a> </li>
+                        <li> <a href="complains">Contacts</a> </li>
+
+                        
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -65,13 +72,17 @@
                                     </li>
                                 </ul>
                             </li>
-                        @endif
-                    </ul>
+                        @endif                    </ul>
                 </div>
             </div>
         </nav>
-
-        @yield('content')
+        <div class="container">
+            @include('partials.errors')
+            @include('partials.success')
+            <div class="row" >
+                @yield('content')
+            </div>
+        </div>
     </div>
 
     <!-- Scripts -->

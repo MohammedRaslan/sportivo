@@ -11,8 +11,15 @@ use App\Comment;
 use App\User;
 
 use Illuminate\Http\Request;
+interface postbuilder {
+    public function blog();
+    public function comment(Request $request);
+    public function getcomment();
+    public function likespage();
 
-class PostsController extends Controller
+}
+
+class PostsController extends Controller implements postbuilder
 {
     /**
      * Display a listing of the resource.

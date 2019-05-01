@@ -44,7 +44,11 @@
 				<div class="navbar-header">
 					<!-- Logo -->
 					<div class="navbar-brand">
-						<a class="logo" href="index">
+							@if(url('blog/#') )
+							<a class="logo" href="{{route('postindex')}}">
+							@else
+						<a class="logo" href="postindex">
+							@endif
 							<h2 style="color:floralwhite"><b>Sportivo</b></h2>
 						</a>
 					</div>
@@ -62,10 +66,42 @@
 				<!-- Navigation -->
 				<nav id="nav">
 					<ul class="main-menu nav navbar-nav navbar-right">
-						<li><a href="index">Home</a></li>
-						<li><a href="#">About</a></li>
+						@if(!Auth::guest())
+						
+						<li> 	<div class="widget search-widget "style="width:250px; position:relative; top:6px; left:-150px;">
+								<form action="{{ URL::to('/search') }}" method="POST" role="search">
+									{{ csrf_field() }}
+										<input class="input"  type="text" name="search" placeholder="Search..." >
+										<button type="submit"  style="color:chocolate"><i class="fa fa-search"></i></button>
+									</form>
+								</div></li>
+						
+						@endif
+						@if(!Auth::guest())
+						@if(Auth::user()->user_type == 0)
+						<li><a href="{{ url('/admin') }}">Admin Panel</a></li>
+						@endif
+						@endif
+						@if ( url('blog/#') )
+					<li><a href="{{ route('postindex') }}">Home</a></li>
+						@else
+						<li><a href="postindex">Home</a></li>
+						@endif
+						@if(!Auth::guest())
+						@if ( url('blog/#') )
+						<li><a href="{{ route('blog') }}">Blog</a></li>
+						@else
 						<li><a href="blog">Blog</a></li>
+						@endif
+						@if( url('blog/#') )
+						<li><a href="{{route('likespage')}}">Likes</a></li>
+						@else
+						<li><a href="likespage">Likes</a></li>
+						@endif
+						@endif
+						@if(!Auth::guest())
 						<li><a href="contact">Contact</a></li>
+						@endif
 						<!-- Authentication Links -->
 						@if (Auth::guest())
                             <li><a href="{{ route('login') }}">Login</a></li>
@@ -98,4 +134,6 @@
 			</div>
 		</header>
 		<!-- /Header -->
+		@yield('body')
+		
 
